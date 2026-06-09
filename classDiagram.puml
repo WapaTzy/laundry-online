@@ -1,0 +1,100 @@
+@startuml laundry
+skinparam classAttributeIconSize 0
+
+class User {
+    +id : int
+    +nama : string
+    +email : string
+    +password : string
+    +role : string
+    +created_at : datetime
+
+    +login()
+    +logout()
+}
+
+class Admin {
+    +kelolaLayanan()
+    +verifikasiPembayaran()
+    +updateStatusPesanan()
+}
+
+class Pelanggan {
+    +checkout()
+    +uploadPembayaran()
+    +trackingPesanan()
+    +beriReview()
+}
+
+class Layanan {
+    +id : int
+    +nama_layanan : string
+    +harga : int
+    +jenis : string
+    +estimasi : string
+    +created_at : datetime
+
+    +tambahLayanan()
+    +ubahLayanan()
+    +hapusLayanan()
+}
+
+class Pesanan {
+    +id : int
+    +kode_invoice : string
+    +total : int
+    +status : string
+    +pembayaran : string
+    +alamat : text
+    +whatsapp : string
+    +created_at : datetime
+
+    +buatPesanan()
+    +hitungTotal()
+    +ubahStatus()
+}
+
+class DetailPesanan {
+    +id : int
+    +qty : int
+    +subtotal : int
+
+    +hitungSubtotal()
+}
+
+class Pembayaran {
+    +id : int
+    +bukti_transfer : string
+    +status_verifikasi : string
+    +created_at : datetime
+
+    +uploadBukti()
+    +verifikasi()
+}
+
+class Review {
+    +id : int
+    +rating : int
+    +komentar : text
+    +created_at : datetime
+
+    +tambahReview()
+    +ubahReview()
+}
+
+User <|-- Admin
+User <|-- Pelanggan
+
+Pelanggan "1" -- "*" Pesanan : membuat
+Pesanan "1" -- "*" DetailPesanan : memiliki
+Layanan "1" -- "*" DetailPesanan : dipilih
+
+Pesanan "1" -- "1" Pembayaran : pembayaran
+Pelanggan "1" -- "*" Review : memberi
+Pesanan "1" -- "1" Review : memiliki
+
+Admin ..> Layanan : kelola
+Admin ..> Pembayaran : verifikasi
+Admin ..> Pesanan : update status
+
+@enduml

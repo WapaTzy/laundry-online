@@ -1,0 +1,54 @@
+@startuml UseCaseLaundry
+left to right direction
+
+actor Pelanggan
+actor Admin
+
+rectangle "Sistem Laundry Online" {
+
+    usecase "Register" as UC1
+    usecase "Login" as UC2
+    usecase "Logout" as UC14
+
+    usecase "Melihat Katalog Laundry" as UC3
+    usecase "Tambah Keranjang" as UC4
+    usecase "Checkout Pesanan" as UC5
+    usecase "Upload Bukti Pembayaran" as UC6
+    usecase "Tracking Status Laundry" as UC7
+
+    usecase "Kelola Layanan" as UC9
+    usecase "Kelola Pesanan" as UC10
+    usecase "Verifikasi Pembayaran" as UC11
+    usecase "Update Status Laundry" as UC12
+    usecase "Lihat Dashboard" as UC13
+}
+
+' Relasi Pelanggan
+Pelanggan --> UC1
+Pelanggan --> UC2
+Pelanggan --> UC14
+Pelanggan --> UC3
+Pelanggan --> UC4
+Pelanggan --> UC5
+Pelanggan --> UC6
+Pelanggan --> UC7
+
+' Relasi Admin
+Admin --> UC2
+Admin --> UC14
+Admin --> UC9
+Admin --> UC10
+Admin --> UC11
+Admin --> UC12
+Admin --> UC13
+
+' Include Relationship
+UC5 .> UC4 : <<include>>
+UC6 .> UC5 : <<include>>
+UC7 .> UC5 : <<include>>
+UC11 .> UC10 : <<include>>
+UC12 .> UC10 : <<include>>
+
+
+@enduml
+

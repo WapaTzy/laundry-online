@@ -1,0 +1,91 @@
+@startuml laundry
+hide circle
+skinparam linetype ortho
+
+
+
+entity users {
+    * id : int <<PK>>
+    --
+    nama : varchar
+    email : varchar
+    password : varchar
+    role : enum(admin,pelanggan)
+    created_at : datetime
+}
+
+entity layanan {
+    * id : int <<PK>>
+    --
+    nama_layanan : varchar
+    harga : int
+    jenis : varchar
+    estimasi : varchar
+    created_at : datetime
+}
+
+entity pesanan {
+    * id : int <<PK>>
+    --
+    user_id : int <<FK>>
+    kode_invoice : varchar
+    total : int
+    status : varchar
+    pembayaran : varchar
+    alamat : text
+    whatsapp : varchar
+    created_at : datetime
+}
+
+entity detail_pesanan {
+    * id : int <<PK>>
+    --
+    pesanan_id : int <<FK>>
+    layanan_id : int <<FK>>
+    qty : int
+    subtotal : int
+}
+
+entity pembayaran {
+    * id : int <<PK>>
+    --
+    pesanan_id : int <<FK>>
+    bukti_transfer : varchar
+    status_verifikasi : varchar
+    created_at : datetime
+}
+
+entity review {
+    * id : int <<PK>>
+    --
+    user_id : int <<FK>>
+    pesanan_id : int <<FK>>
+    rating : int
+    komentar : text
+    created_at : datetime
+}
+
+users ||--o{ pesanan : membuat
+pesanan ||--o{ detail_pesanan : memiliki
+layanan ||--o{ detail_pesanan : dipilih
+pesanan ||--|| pembayaran : pembayaran
+users ||--o{ review : memberi
+pesanan ||--|| review : memiliki
+
+note right of users
+Role User:
+- admin
+- pelanggan
+
+Admin:
+- Kelola layanan
+- Verifikasi pembayaran
+- Update status laundry
+
+Pelanggan:
+- Checkout
+- Upload pembayaran
+- Tracking laundry
+end note
+
+@enduml
