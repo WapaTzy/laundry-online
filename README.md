@@ -33,7 +33,7 @@ graph TD
     end
 
     %% Subgraph Backend
-    subgraph BackendLayer [Backend PHP Logic - TUGAS ANDA]
+    subgraph BackendLayer [Backend PHP Logic]
         Router["Router & Middleware<br>(index.php, login.php, customer/dashboard.php, admin/pesanan/index.php)"]:::router
         
         Auth["⚙️ Auth Module<br>Login, Register,<br>Session Check"]:::backend
